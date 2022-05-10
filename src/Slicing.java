@@ -1,25 +1,38 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Slicing
-{
-    static ArrayList<String> sta = new ArrayList<String>();
-    Dslice dslice[]=new Dslice[69]; 
+public class Slicing {
+    static ArrayList<String> pta = new ArrayList<String>();
+    int nn;
+    Dslice dslice[] = new Dslice[nn];
+    HashMap<String, String> hash_map = new HashMap<String, String>();
+    Slicing(int mn, HashMap<String, String> hash,Dslice ds[])
+    {
+        nn=mn;
+        hash_map=hash;
+        dslice= ds;
+    }
+    int n;
 
     ArrayList<String> SlicingAlgo(String node)
     {
         try{
-        int n =Integer.parseInt(node);
+             n =Integer.parseInt(node);
            }
+           catch(NumberFormatException e)  
+           { 
+           pta.add( hash_map.get(node));
+           SlicingAlgo(hash_map.get(node));
+           } 
         for(String ob: dslice[n-1].slice)
         {
-            sta.add(ob);
-            SlicingAlgo(ob);
-
+            if(!pta.contains(ob))
+            {
+                pta.add(ob);
+                SlicingAlgo(ob);
+            }
         }
-        catch(NumberFormatException e)  
-			{  
-				System.out.println("it's okay");  
-			}  
-        return sta;
+        
+        return pta;
     }
 }
